@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+    <style>
+        /* Basic styling for the upload form */
+        .upload-form {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .upload-form input, .upload-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .upload-form button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .upload-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-form">
+        <h2>Upload Your Video</h2>
+        <input type="text" id="videoTitle" placeholder="Enter video title" required>
+        <input type="file" id="videoFile" accept="video/*" required>
+        <button onclick="uploadVideo()">Upload</button>
+    </div>
+
+    <script>
+        function uploadVideo() {
+            const title = document.getElementById('videoTitle').value;
+            const fileInput = document.getElementById('videoFile');
+            const file = fileInput.files[0];
+
+            if (!title || !file) {
+                alert("Please provide both a title and a video file.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('video', file);
+
+            fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Video uploaded successfully!');
+                document.getElementById('videoTitle').value = '';
+                fileInput.value = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
+
