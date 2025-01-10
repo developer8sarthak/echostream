@@ -1,177 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Content Viewer</title>
+    <title>Enhanced Content Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        /* Custom Animations and Transitions */
+        .btn-hover:hover {
+            background-color: #1e40af;
+            transform: translateY(-4px);
+            transition: background-color 0.3s, transform 0.3s;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #5a3f37, #8e6e53);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            margin: 0;
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            background-color: #2c2a29;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            overflow: hidden;
-            transition: all 0.3s ease;
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
-        .container:hover {
-            transform: scale(1.03);
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 36px;
-            color: #ff9800;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        button {
-            padding: 15px 40px;
-            background-color: #ff5722;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin: 0 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        button:hover {
-            background-color: #ff7043;
-            transform: translateY(-5px);
-        }
-
-        button:active {
-            transform: translateY(2px);
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
         }
 
         iframe {
-            width: 100%;
-            height: 500px;
-            border: 3px solid #ff5722;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #d1d1d1;
-        }
-
-        .footer a {
-            color: #ff9800;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .footer a:hover {
-            color: #ff5722;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            iframe {
-                height: 300px;
-            }
-
-            button {
-                padding: 12px 30px;
-                font-size: 18px;
-            }
-
-            .header h1 {
-                font-size: 28px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            button {
-                padding: 10px 25px;
-                font-size: 16px;
-            }
-
-            .header h1 {
-                font-size: 24px;
-            }
-        }
-           .home-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: transparent;
-            border: none;
-            font-size: 30px;
-            color: #4CAF50;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        /* Home icon hover effect */
-        .home-button:hover {
-            color: #45a049;
+        iframe:hover {
+            transform: scale(1.02);
         }
     </style>
 </head>
-<body>
-    <button class="home-button" onclick="window.location.href='index.html';">
-        <i class="fas fa-home"></i>
-    </button>
-<div class="container">
-    <div class="header">
-        <h1>Discover New Content</h1>
+
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center min-h-screen px-6">
+
+    <div class="container max-w-4xl bg-white rounded-3xl shadow-2xl p-8 text-center">
+        <!-- Header Section -->
+        <header class="header mb-8">
+            <h1 class="text-5xl font-extrabold text-gray-800 mb-4">Enhanced Content Viewer</h1>
+            <p class="text-xl text-gray-600 leading-relaxed">Explore curated content with a sleek, modern interface.</p>
+        </header>
+
+        <!-- Button Section -->
+        <div class="button-container mb-8">
+            <button id="loadContentButton" class="btn-hover px-8 py-4 bg-blue-600 text-white text-lg rounded-full shadow-lg transition duration-300">
+                Load New Content
+            </button>
+        </div>
+
+        <!-- iFrame Section -->
+        <iframe id="contentIframe" src="https://i.pinimg.com/236x/26/bb/1e/26bb1e46ea79e09691f8bd670f27095a.jpg" title="Dynamic Content" class="w-full h-96 md:h-[600px] rounded-xl border-4 border-gray-300 shadow-lg fade-in"></iframe>
+
+        <!-- Footer Section -->
+        <footer class="footer mt-8">
+            <p class="text-gray-500">Powered by <a href="https://www.example.com" target="_blank" class="text-blue-600 hover:underline">Example</a></p>
+        </footer>
     </div>
 
-    <div class="button-container">
-        <button id="loadContentButton">Load New Content</button>
-    </div>
-
-    <iframe id="contentIframe" src="https://i.pinimg.com/236x/26/bb/1e/26bb1e46ea79e09691f8bd670f27095a.jpg" title="Dynamic Content"></iframe>
-
-    <div class="footer">
-        <p>Powered by <a href="https://www.example.com" target="_blank">EchoStream</a></p>
-    </div>
-</div>
-
-<script>
-    // List of URLs (or content) to load in the iframe
-    const contentURLs = [
+    <script>
+        // Dynamic Content URLs
+        const contentURLs = [
         'https://i.pinimg.com/236x/0b/52/22/0b52226295198924215a34fe91778366.jpg',
         'https://i.pinimg.com/236x/d6/ec/2e/d6ec2e005ca513a891596a543444b3f7.jpg',
         'https://i.pinimg.com/474x/c4/8e/4d/c48e4dd4d5f08698fff53f1d03c82387.jpg',
@@ -192,25 +93,56 @@
         'https://i.pinimg.com/236x/50/d3/6e/50d36ee0583ba81c95bfddda693eada8.jpg',
         'https://i.pinimg.com/236x/3b/fd/4b/3bfd4b7d162e0533a344ef3aee80e411.jpg',
         'https://i.pinimg.com/236x/28/dc/44/28dc44a5999f670e8dd809f058a47940.jpg',
+        'https://i.pinimg.com/236x/ca/ac/7e/caac7ec87cd8dc67e50d6895045033f3.jpg',
+        'https://i.pinimg.com/236x/ca/ac/7e/caac7ec87cd8dc67e50d6895045033f3.jpg',
+        'https://i.pinimg.com/474x/fe/b5/d8/feb5d8c4ec09b7093a17ee0f6a287f65.jpg',
+        'https://i.pinimg.com/236x/cf/5a/cf/cf5acf3dfb60993fa6c076b5b9e25846.jpg',
+        'https://i.pinimg.com/236x/cf/c4/b9/cfc4b9d8c064eff7344859aa92cf66e0.jpg',
+        'https://i.pinimg.com/236x/f2/d4/78/f2d4789275c0da5f543c96beabd5fbb2.jpg',
+        'https://i.pinimg.com/736x/28/59/33/285933ea17a797553d384b44c94aeb2d.jpg',
+        'https://i.pinimg.com/236x/40/15/8f/40158f52c92094a386ca50f203608abf.jpg',
+        'https://i.pinimg.com/474x/b4/be/e2/b4bee26896d2c0f33fc36519b4ab9d0e.jpg',
+        'https://i.pinimg.com/474x/92/54/e3/9254e343f9d1ad962d3e38039a9c5b67.jpg',
+        'https://i.pinimg.com/474x/44/29/3f/44293f16884a56a641dbf0f528163d47.jpg',
+        'https://i.pinimg.com/474x/45/62/e5/4562e5f1a5003c84ae9d92bec9f92e68.jpg',
+        'https://i.pinimg.com/474x/03/1d/1d/031d1d4ebc66589e0f4cef33ba8eaf44.jpg',
+        'https://i.pinimg.com/474x/78/e2/a8/78e2a80bbc19865d2923d24acf2edef3.jpg',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
     ];
+            // Additional URLs
+        
 
-    let currentContentIndex = 0;
+        let currentContentIndex = 0;
 
-    // Function to load new content into the iframe
-    function loadNewContent() {
-        // Increment the index to load the next content in the list
-        currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+        // Function to Load New Content
+        function loadNewContent() {
+            const iframe = document.getElementById('contentIframe');
 
-        // Get the iframe element
-        const iframe = document.getElementById('contentIframe');
+            // Add fade-out effect
+            iframe.classList.add('fade-out');
 
-        // Set the src attribute of the iframe to load new content
-        iframe.src = contentURLs[currentContentIndex];
-    }
+            // Wait for fade-out to complete, then load new content
+            setTimeout(() => {
+                currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+                iframe.src = contentURLs[currentContentIndex];
+                iframe.classList.remove('fade-out');
+                iframe.classList.add('fade-in');
+            }, 500); // Duration matches fadeOut animation
+        }
 
-    // Event listener for the "Load New Content" button
-    document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
-</script>
-
+        // Event Listener for Button
+        document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
+    </script>
 </body>
+
 </html>
