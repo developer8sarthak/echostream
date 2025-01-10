@@ -3,199 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediaHub - EchoStream</title>
+    <title>Dynamic Content Viewer</title>
     <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #f6f7f8;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #5a3f37, #8e6e53);
+            color: #fff;
             display: flex;
             justify-content: center;
-        }
-
-        /* Center the container */
-        .container {
-            width: 800px;
-            max-width: 100%;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            margin: 0;
         }
 
-        /* Upload Form */
-        .upload-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #e1e4e8;
-            border-radius: 5px;
-            background-color: #fff;
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #2c2a29;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .upload-form input, .upload-form button {
-            padding: 10px;
-            border: 1px solid #e1e4e8;
-            border-radius: 5px;
-            font-size: 14px;
+        .container:hover {
+            transform: scale(1.03);
         }
 
-        .upload-form button {
-            background-color: #0079d3;
-            color: white;
-            cursor: pointer;
-        }
-
-        .upload-form button:hover {
-            background-color: #005f7f;
-        }
-
-        /* Content Container */
-        .content-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Individual Media Post */
-        .media-post {
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e1e4e8;
-        }
-
-        /* Vote Section */
-        .vote-section {
+        .header {
             text-align: center;
-            padding: 10px;
-            min-width: 40px;
+            margin-bottom: 30px;
         }
 
-        .vote-section button {
+        .header h1 {
+            font-size: 36px;
+            color: #ff9800;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 15px 40px;
+            background-color: #ff5722;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 0 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #ff7043;
+            transform: translateY(-5px);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 3px solid #ff5722;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #d1d1d1;
+        }
+
+        .footer a {
+            color: #ff9800;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff5722;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            iframe {
+                height: 300px;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+           .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background-color: transparent;
             border: none;
-            font-size: 18px;
+            font-size: 30px;
+            color: #4CAF50;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
-
-        .vote-section .vote-count {
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        /* Media Content */
-        .post-content {
-            flex: 1;
-        }
-
-        .media-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0;
-            color: #333;
-        }
-
-        .media-content video {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
+        /* Home icon hover effect */
+        .home-button:hover {
+            color: #45a049;
         }
     </style>
 </head>
 <body>
-
+    <button class="home-button" onclick="window.location.href='index.html';">
+        <i class="fas fa-home"></i>
+    </button>
 <div class="container">
-    <!-- Upload Form -->
-    <div class="upload-form">
-        <h2>Upload Your Video</h2>
-        <input type="text" id="videoTitle" placeholder="Enter video title" required>
-        <input type="file" id="videoFile" accept="video/*" required>
-        <button onclick="uploadVideo()">Upload</button>
+    <div class="header">
+        <h1>Discover New Content</h1>
     </div>
 
-    <!-- Content Container for displaying posts -->
-    <div class="content-container" id="contentContainer">
-        <!-- Existing posts will be appended here -->
+    <div class="button-container">
+        <button id="loadContentButton">Load New Content</button>
+    </div>
+
+    <iframe id="contentIframe" src="https://i.pinimg.com/236x/26/bb/1e/26bb1e46ea79e09691f8bd670f27095a.jpg" title="Dynamic Content"></iframe>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.example.com" target="_blank">EchoStream</a></p>
     </div>
 </div>
 
 <script>
-    function uploadVideo() {
-        const title = document.getElementById('videoTitle').value;
-        const fileInput = document.getElementById('videoFile');
-        const file = fileInput.files[0];
+    // List of URLs (or content) to load in the iframe
+    const contentURLs = [
+        'https://i.pinimg.com/236x/0b/52/22/0b52226295198924215a34fe91778366.jpg',
+        'https://i.pinimg.com/236x/d6/ec/2e/d6ec2e005ca513a891596a543444b3f7.jpg',
+        'https://i.pinimg.com/474x/c4/8e/4d/c48e4dd4d5f08698fff53f1d03c82387.jpg',
+        'https://i.pinimg.com/236x/49/32/db/4932dbd88ae666184cd52eb1b30b1d3d.jpg',
+        'https://i.pinimg.com/736x/5f/5d/f3/5f5df36d31adac6784cffb314f3ae87a.jpg',
+        'https://i.pinimg.com/236x/0c/54/20/0c542097224f8d7499686bbe19f779b7.jpg',
+        'https://i.pinimg.com/236x/18/93/12/1893128a4d936ebe25a751f3530df021.jpg',
+        'https://i.pinimg.com/474x/8d/72/68/8d7268ab379ab882b2562300a0201ebb.jpg',
+        'https://i.pinimg.com/236x/72/eb/1b/72eb1bcad9e3d197a37c2df432b7a6b8.jpg',
+        'https://i.pinimg.com/236x/c3/7f/c5/c37fc5d8e10c4dc838500f48e51d3540.jpg',
+        'https://i.pinimg.com/474x/1a/3f/1c/1a3f1cd0f701c2917cf2f5ac57005705.jpg',
+        'https://i.pinimg.com/236x/d6/77/9c/d6779c5234c5b5fc0c01a02539cccdf3.jpg',
+        'https://i.pinimg.com/236x/6b/e7/8a/6be78af56140888cfe8b78091453378c.jpg',
+        'https://i.pinimg.com/236x/1a/ba/78/1aba78c9082a44765bc2ce6c68b9f7e7.jpg',
+        'https://i.pinimg.com/474x/4f/2c/8b/4f2c8b547e63f8e4a7085a4812fe0107.jpg',
+        'https://i.pinimg.com/236x/85/b1/68/85b1687bc243422772f545f857ca5c80.jpg',
+        'https://i.pinimg.com/236x/6c/5a/08/6c5a08b1de234f4ba3beab1d7ce304b8.jpg',
+        'https://i.pinimg.com/236x/50/d3/6e/50d36ee0583ba81c95bfddda693eada8.jpg',
+        'https://i.pinimg.com/236x/3b/fd/4b/3bfd4b7d162e0533a344ef3aee80e411.jpg',
+        'https://i.pinimg.com/236x/28/dc/44/28dc44a5999f670e8dd809f058a47940.jpg',
+    ];
 
-        if (!title || !file) {
-            alert("Please provide both a title and a video file.");
-            return;
-        }
+    let currentContentIndex = 0;
 
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const videoURL = event.target.result;
-            addVideoPost(title, videoURL);
-        };
-        reader.readAsDataURL(file);
+    // Function to load new content into the iframe
+    function loadNewContent() {
+        // Increment the index to load the next content in the list
+        currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+
+        // Get the iframe element
+        const iframe = document.getElementById('contentIframe');
+
+        // Set the src attribute of the iframe to load new content
+        iframe.src = contentURLs[currentContentIndex];
     }
 
-    function addVideoPost(title, videoURL) {
-        const container = document.getElementById('contentContainer');
-        
-        const post = document.createElement('div');
-        post.classList.add('media-post');
-        post.setAttribute('data-voted', 'false');
-
-        post.innerHTML = `
-            <div class="vote-section">
-                <button onclick="vote('up', this)">⬆️</button>
-                <div class="vote-count">0</div>
-                <button onclick="vote('down', this)">⬇️</button>
-            </div>
-            <div class="post-content">
-                <h2 class="media-title">${title}</h2>
-                <div class="media-content">
-                    <video controls>
-                        <source src="${videoURL}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-        `;
-
-        container.appendChild(post);
-    }
-
-    function vote(type, button) {
-        const post = button.closest('.media-post');
-        const voted = post.getAttribute('data-voted');
-        
-        if (voted === 'true') {
-            alert("You can only vote once per post.");
-            return;
-        }
-
-        const voteCountElement = post.querySelector('.vote-count');
-        let voteCount = parseInt(voteCountElement.textContent);
-
-        if (type === 'up') {
-            voteCount += 1;
-        } else if (type === 'down') {
-            voteCount -= 1;
-        }
-
-        voteCountElement.textContent = voteCount;
-        post.setAttribute('data-voted', 'true');
-    }
+    // Event listener for the "Load New Content" button
+    document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
 </script>
 
 </body>

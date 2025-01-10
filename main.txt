@@ -1,0 +1,981 @@
+mediahub1{<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaHub - EchoStream</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f7f8;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Center the container */
+        .container {
+            width: 800px;
+            max-width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Upload Form */
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e1e4e8;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .upload-form input, .upload-form button {
+            padding: 10px;
+            border: 1px solid #e1e4e8;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .upload-form button {
+            background-color: #0079d3;
+            color: white;
+            cursor: pointer;
+        }
+
+        .upload-form button:hover {
+            background-color: #005f7f;
+        }
+
+        /* Content Container */
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Individual Media Post */
+        .media-post {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e4e8;
+        }
+
+        /* Vote Section */
+        .vote-section {
+            text-align: center;
+            padding: 10px;
+            min-width: 40px;
+        }
+
+        .vote-section button {
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .vote-section .vote-count {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Media Content */
+        .post-content {
+            flex: 1;
+        }
+
+        .media-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+        }
+
+        .media-content video {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Upload Form -->
+    <div class="upload-form">
+        <h2>Upload Your Video</h2>
+        <input type="text" id="videoTitle" placeholder="Enter video title" required>
+        <input type="file" id="videoFile" accept="video/*" required>
+        <button onclick="uploadVideo()">Upload</button>
+    </div>
+
+    <!-- Content Container for displaying posts -->
+    <div class="content-container" id="contentContainer">
+        <!-- Existing posts will be appended here -->
+    </div>
+</div>
+
+<script>
+    function uploadVideo() {
+        const title = document.getElementById('videoTitle').value;
+        const fileInput = document.getElementById('videoFile');
+        const file = fileInput.files[0];
+
+        if (!title || !file) {
+            alert("Please provide both a title and a video file.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const videoURL = event.target.result;
+            addVideoPost(title, videoURL);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function addVideoPost(title, videoURL) {
+        const container = document.getElementById('contentContainer');
+        
+        const post = document.createElement('div');
+        post.classList.add('media-post');
+        post.setAttribute('data-voted', 'false');
+
+        post.innerHTML = `
+            <div class="vote-section">
+                <button onclick="vote('up', this)">⬆️</button>
+                <div class="vote-count">0</div>
+                <button onclick="vote('down', this)">⬇️</button>
+            </div>
+            <div class="post-content">
+                <h2 class="media-title">${title}</h2>
+                <div class="media-content">
+                    <video controls>
+                        <source src="${videoURL}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(post);
+    }
+
+    function vote(type, button) {
+        const post = button.closest('.media-post');
+        const voted = post.getAttribute('data-voted');
+        
+        if (voted === 'true') {
+            alert("You can only vote once per post.");
+            return;
+        }
+
+        const voteCountElement = post.querySelector('.vote-count');
+        let voteCount = parseInt(voteCountElement.textContent);
+
+        if (type === 'up') {
+            voteCount += 1;
+        } else if (type === 'down') {
+            voteCount -= 1;
+        }
+
+        voteCountElement.textContent = voteCount;
+        post.setAttribute('data-voted', 'true');
+    }
+</script>
+
+</body>
+</html>
+}
+mediahub 2{<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Content Viewer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d8e0e8);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #0079d3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 0 10px;
+        }
+
+        button:hover {
+            background-color: #ff6347;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        .footer a {
+            color: #0079d3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff4500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            iframe {
+                height: 300px;
+            }
+
+            button {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Discover New Content</h1>
+    </div>
+
+    <div class="button-container">
+        <button id="loadContentButton">Load New Content</button>
+        <button id="randomContentButton">Random Meme</button>
+    </div>
+
+    <iframe id="contentIframe" src="https://pin.it/2TEz6Ov8m" title="Dynamic Content"></iframe>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.example.com" target="_blank">Example</a></p>
+    </div>
+</div>
+
+<script>
+    // List of URLs (or content) to load in the iframe
+    const contentURLs = [
+        'https://pin.it/2TEz6Ov8m',  // Content 1
+        'https://pin.it/4PLdXtA96',  // Content 2
+        'https://pin.it/3tlwVJ8lE',  // Content 3
+        'https://pin.it/4w448s6FU'   // Content 4
+    ];
+
+    let currentContentIndex = 0;
+
+    // Function to load new content into the iframe
+    function loadNewContent() {
+        // Increment the index to load the next content in the list
+        currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+
+        // Get the iframe element
+        const iframe = document.getElementById('contentIframe');
+
+        // Set the src attribute of the iframe to load new content
+        iframe.src = contentURLs[currentContentIndex];
+    }
+
+    // Function to load a random meme
+    function loadRandomContent() {
+        const randomIndex = Math.floor(Math.random() * contentURLs.length);
+        const iframe = document.getElementById('contentIframe');
+        iframe.src = contentURLs[randomIndex];
+    }
+
+    // Event listener for the "Load New Content" button
+    document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
+
+    // Event listener for the "Random Meme" button
+    document.getElementById('randomContentButton').addEventListener('click', loadRandomContent);
+</script>
+
+</body>
+</html>
+}
+media 3{<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Content Viewer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d8e0e8);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #0079d3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 0 10px;
+        }
+
+        button:hover {
+            background-color: #ff6347;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        .footer a {
+            color: #0079d3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff4500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            iframe {
+                height: 300px;
+            }
+
+            button {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Discover New Content</h1>
+    </div>
+
+    <div class="button-container">
+        <button id="loadContentButton">Load New Content</button>
+        <button id="randomContentButton">Random Meme</button>
+    </div>
+
+    <iframe id="contentIframe" src="https://www.example.com/video1" title="Dynamic Content"></iframe>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.example.com" target="_blank">Example</a></p>
+    </div>
+</div>
+
+<script>
+    // List of URLs (or content) to load in the iframe
+    const contentURLs = [
+        'https://www.example.com/video1',  // Link to video or content 1
+        'https://www.example.com/video2',  // Link to video or content 2
+        'https://www.example.com/video3',  // Link to video or content 3
+        'https://www.example.com/meme1',   // Link to meme or content 4
+        'https://www.example.com/meme2'    // Link to meme or content 5
+    ];
+
+    let currentContentIndex = 0;
+
+    // Function to load new content into the iframe
+    function loadNewContent() {
+        // Increment the index to load the next content in the list
+        currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+
+        // Get the iframe element
+        const iframe = document.getElementById('contentIframe');
+
+        // Set the src attribute of the iframe to load new content
+        iframe.src = contentURLs[currentContentIndex];
+    }
+
+    // Function to load a random meme
+    function loadRandomContent() {
+        const randomIndex = Math.floor(Math.random() * contentURLs.length);
+        const iframe = document.getElementById('contentIframe');
+        iframe.src = contentURLs[randomIndex];
+    }
+
+    // Event listener for the "Load New Content" button
+    document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
+
+    // Event listener for the "Random Meme" button
+    document.getElementById('randomContentButton').addEventListener('click', loadRandomContent);
+</script>
+
+</body>
+</html>
+}
+media 4{<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Content Viewer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            background-color: #0079d3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005a8c;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        .footer a {
+            color: #0079d3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #005a8c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            iframe {
+                height: 300px;
+            }
+
+            button {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                padding: 6px 15px;
+                font-size: 12px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Discover New Content</h1>
+    </div>
+
+    <div class="button-container">
+        <button id="loadContentButton">Load New Content</button>
+    </div>
+
+    <iframe id="contentIframe" src="https://www.example.com/video1" title="Dynamic Content"></iframe>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.example.com" target="_blank">Example</a></p>
+    </div>
+</div>
+
+<script>
+    // List of URLs (or content) to load in the iframe
+    const contentURLs = [
+        'https://www.example.com/video1',  // Link to video or content 1
+        'https://www.example.com/video2',  // Link to video or content 2
+        'https://www.example.com/video3',  // Link to video or content 3
+        'https://www.example.com/meme1',   // Link to meme or content 4
+        'https://www.example.com/meme2'    // Link to meme or content 5
+    ];
+
+    let currentContentIndex = 0;
+
+    // Function to load new content into the iframe
+    function loadNewContent() {
+        // Increment the index to load the next content in the list
+        currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+
+        // Get the iframe element
+        const iframe = document.getElementById('contentIframe');
+
+        // Set the src attribute of the iframe to load new content
+        iframe.src = contentURLs[currentContentIndex];
+    }
+
+    // Event listener for the "Load New Content" button
+    document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
+</script>
+
+</body>
+</html>
+}
+media 4themed control{<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Content Viewer</title>
+    <style>
+        /* Default Light Theme */
+        :root {
+            --background-color: #f0f4f8;
+            --primary-color: #0079d3;
+            --button-background: #ff4500;
+            --button-hover: #ff6347;
+            --button-text-color: #fff;
+            --content-background: #ffffff;
+            --text-color: #333;
+            --footer-color: #555;
+            --footer-link-color: #0079d3;
+            --footer-link-hover-color: #ff4500;
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --background-color: #2c2c2c;
+            --primary-color: #00aaff;
+            --button-background: #ff6347;
+            --button-hover: #ff4500;
+            --button-text-color: #fff;
+            --content-background: #333;
+            --text-color: #fff;
+            --footer-color: #bbb;
+            --footer-link-color: #00aaff;
+            --footer-link-hover-color: #ff6347;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            background-color: var(--content-background);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: var(--button-background);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 0 10px;
+        }
+
+        button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 2px solid black;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--footer-color);
+        }
+
+        .footer a {
+            color: var(--footer-link-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--footer-link-hover-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            iframe {
+                height: 300px;
+            }
+
+            button {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Discover New Content</h1>
+    </div>
+
+    <div class="button-container">
+        <button id="loadContentButton">Load New Content</button>
+        <button id="themeToggleButton">Toggle Theme</button>
+    </div>
+
+    <iframe id="contentIframe" src="https://i.pinimg.com/236x/26/bb/1e/26bb1e46ea79e09691f8bd670f27095a.jpg" title="Dynamic Content"></iframe>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.example.com" target="_blank">Example</a></p>
+    </div>
+</div>
+
+<script>
+    // List of URLs (or content) to load in the iframe
+    const contentURLs = [
+        'https://i.pinimg.com/236x/0b/52/22/0b52226295198924215a34fe91778366.jpg',
+        'https://i.pinimg.com/236x/d6/ec/2e/d6ec2e005ca513a891596a543444b3f7.jpg',
+        'https://i.pinimg.com/474x/c4/8e/4d/c48e4dd4d5f08698fff53f1d03c82387.jpg',
+        'https://i.pinimg.com/236x/49/32/db/4932dbd88ae666184cd52eb1b30b1d3d.jpg',
+        'https://i.pinimg.com/736x/5f/5d/f3/5f5df36d31adac6784cffb314f3ae87a.jpg'
+    ];
+
+    let currentContentIndex = 0;
+
+    // Function to load new content into the iframe
+    function loadNewContent() {
+        // Increment the index to load the next content in the list
+        currentContentIndex = (currentContentIndex + 1) % contentURLs.length;
+
+        // Get the iframe element
+        const iframe = document.getElementById('contentIframe');
+
+        // Set the src attribute of the iframe to load new content
+        iframe.src = contentURLs[currentContentIndex];
+    }
+
+    // Event listener for the "Load New Content" button
+    document.getElementById('loadContentButton').addEventListener('click', loadNewContent);
+
+    // Function to toggle between light and dark themes
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Toggle theme in the body element
+        document.body.setAttribute('data-theme', newTheme);
+        
+        // Save the selected theme in localStorage
+        localStorage.setItem('theme', newTheme);
+    }
+
+    // Event listener for the theme toggle button
+    document.getElementById('themeToggleButton').addEventListener('click', toggleTheme);
+
+    // Set the initial theme based on localStorage
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+</script>
+
+</body>
+</html>
+}
