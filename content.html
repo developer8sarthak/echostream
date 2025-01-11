@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyYouTube</title>
+    <link rel="stylesheet" href="content.css">
+</head>
+<style>
+/* Reset and base styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-left, .header-center, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon, .upload-icon, .notifications-icon, .profile-icon {
+    font-size: 24px;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.search-bar {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px 0 0 2px;
+    outline: none;
+    background-color: #fff;
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #e57373; /* Light Red */
+    border-radius: 0 2px 2px 0;
+    cursor: pointer;
+    color: white;
+}
+
+.search-button:hover {
+    background-color: #ef5350;
+}
+
+.main-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.sidebar {
+    width: 15%;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu li {
+    padding: 10px 0;
+}
+
+.nav-menu li a {
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    color: #333;
+}
+
+.nav-menu li a:hover {
+    background-color: #f1f1f1;
+}
+
+.main-content {
+    width: 70%;
+    padding: 20px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.video-card {
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    transition: transform 0.3s;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+}
+
+.video-thumbnail {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+}
+
+.video-info {
+    display: flex;
+    margin-top: 10px;
+}
+
+.channel-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.video-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.video-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.channel-name, .video-stats {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+}
+</style> 
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="menu-icon">☰</div>
+            <div class="logo">MyYouTube</div>
+        </div>
+        <div class="header-center">
+            <input type="text" class="search-bar" placeholder="Search">
+            <button class="search-button">🔍</button>
+        </div>
+        <div class="header-right">
+            <div class="upload-icon">⬆</div>
+            <div class="notifications-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Trending</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="video-grid" id="videoGrid">
+                <!-- Video content will be dynamically added here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sample video data
+        const videoData = [
+            {
+                title: "Video 1",
+                channelName: "Channel A",
+                views: "1M views",
+                uploaded: "1 day ago",
+                thumbnail: "https://i.pinimg.com/236x/d4/3c/eb/d43ceb1d770067e7fdc546821e1a4c99.jpg",
+                channelLogo: "https://i.pinimg.com/236x/d4/3c/eb/d43ceb1d770067e7fdc546821e1a4c99.jpg"
+            },
+            {
+                title: "Video 2",
+                channelName: "Channel B",
+                views: "500K views",
+                uploaded: "3 days ago",
+                thumbnail: "https://i.pinimg.com/236x/d4/3c/eb/d43ceb1d770067e7fdc546821e1a4c99.jpg",
+                channelLogo: "https://i.pinimg.com/236x/d4/3c/eb/d43ceb1d770067e7fdc546821e1a4c99.jpg"
+            },
+            {
+                title: "Video 3",
+                channelName: "Channel C",
+                views: "200K views",
+                uploaded: "1 week ago",
+                thumbnail: "https://i.pinimg.com/236x/d4/3c/eb/d43ceb1d770067e7fdc546821e1a4c99.jpg",
+                channelLogo: "https://i.pinimg.com/236x/d4/3c/eb/d43ceb1d770067e7fdc546821e1a4c99.jpg"
+            }
+        ];
+
+        // Function to load videos dynamically
+        function loadVideos(category) {
+            const videoGrid = document.getElementById('videoGrid');
+            videoGrid.innerHTML = '';  // Clear existing content
+
+            const videosToShow = category === 'home' ? videoData : videoData;  // Use videoData for both Home and Trending
+
+            videosToShow.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.classList.add('video-card');
+
+                videoCard.innerHTML = `
+                    <img src="${video.thumbnail}" alt="Video Thumbnail" class="video-thumbnail">
+                    <div class="video-info">
+                        <img src="${video.channelLogo}" alt="Channel Logo" class="channel-logo">
+                        <div class="video-details">
+                            <h3 class="video-title">${video.title}</h3>
+                            <p class="channel-name">${video.channelName}</p>
+                            <p class="video-stats">${video.views} • ${video.uploaded}</p>
+                        </div>
+                    </div>
+                `;
+
+                videoGrid.appendChild(videoCard);
+            });
+        }
+
+        // Set event listeners for Home and Trending
+        document.querySelectorAll('.nav-menu li a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const category = e.target.textContent.toLowerCase();
+                loadVideos(category);
+            });
+        });
+
+        // Load home content initially
+        loadVideos('home');
+    </script>
+</body>
+</html>
