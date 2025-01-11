@@ -3,183 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chillhop Music</title>
+    <title>Simple Music Player</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
             margin: 0;
-            background-color: #181818;
-            color: #fff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background-color: #282828;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        header h1 {
-            margin: 0;
-            color: #fff;
-            text-align: center;
-            font-size: 28px;
-        }
-
-        nav ul {
-            list-style: none;
             padding: 0;
-            margin: 10px 0 0;
-            display: flex;
-            justify-content: center;
-            background-color: #181818;
-        }
-
-        nav li {
-            margin-left: 20px;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-            padding: 10px;
-            display: block;
-        }
-
-        nav a:hover {
-            background-color: #444;
-            border-radius: 4px;
-        }
-
-        main {
-            display: flex;
-            flex-wrap: wrap;
-            padding-top: 20px;
-        }
-
-        .video-section {
-            width: 70%;
-            padding-right: 20px;
-        }
-
-        .sidebar {
-            width: 30%;
-            padding-left: 20px;
-            background-color: #282828;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .audio-container {
-            margin-top: 20px;
-            background-color: #282828;
-            padding: 20px;
             text-align: center;
-            border-radius: 10px;
         }
 
-        .audio-container iframe {
-            width: 100%;
-            height: 228px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        footer {
-            background-color: #282828;
-            padding: 20px 0;
-            text-align: center;
+        h1 {
+            font-size: 36px;
             margin-top: 20px;
         }
 
-        footer p {
-            margin: 0;
-            color: #fff;
+        .audio-player {
+            margin-top: 50px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            main {
-                flex-direction: column;
-            }
-
-            .video-section {
-                width: 100%;
-                padding-right: 0;
-            }
-
-            .sidebar {
-                width: 100%;
-                margin-top: 20px;
-            }
-
-            nav ul {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav li {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-
-            header h1 {
-                font-size: 24px;
-            }
+        .audio-player audio {
+            margin: 15px 0;
+            border-radius: 5px;
+            width: 90%; /* Make audio controls responsive */
+            max-width: 600px; /* Limit the width for larger screens */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 22px;
-            }
-
-            nav a {
-                font-size: 14px;
-            }
-
-            .audio-container iframe {
-                height: 200px;
-            }
+        .audio-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Chillhop Music</h1>
-            <button class="home-button" onclick="window.location.href='index.html';">
-                <i class="fas fa-home">home</i>
-            </button>
-        </div>
-    </header>
 
-    <main>
-        <!-- Video Section Removed, Adding Audio Section -->
-        <div class="video-section">
-            <!-- Audio embeds -->
-            <div class="audio-container">
-                <iframe src="https://www.udio.com/embed/abZWH7FaGP8bctZT3LF4zz?embedVariant=default&utm_source=generator" style="width:100%; height:228px; border-radius:12px;"></iframe>
-            </div>
+    <h1>Simple Music Player</h1>
+    <button class="home-button" onclick="window.location.href='index.html';">
+        <i class="fas fa-home">home</i>
+    </button>
+    <div class="audio-player">
+        <!-- Music Player 1 -->
+        <div class="audio-name">Chilled Vibes</div>
+        <audio controls>
+            <source src="WhatsApp Audio 2025-01-11 at 18.08.37_a72c1978.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
 
-            <div class="audio-container">
-                <iframe src="https://www.udio.com/embed/deL5utFJhS2K2a9Nheuo7V?embedVariant=default&utm_source=generator" style="width:100%; height:228px; border-radius:12px;"></iframe>
-            </div>
-        </div>
-    </main>
+        <!-- Music Player 2 -->
+        <div class="audio-name">Cozy Feelings</div>
+        <audio controls>
+            <source src="WhatsApp Audio 2025-01-11 at 18.08.38_8061544a.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
 
-    <footer>
-        <p>&copy; 2023 Chillhop Music</p>
-    </footer>
+        <!-- Music Player 3 -->
+        <div class="audio-name">Dreamy Ambience</div>
+        <audio controls>
+            <source src="2025-01-11 at 18.08.31_747a5bb1.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
 
-    <script src="script.js"></script>
+        <!-- Music Player 4 -->
+        <div class="audio-name">Lost in Thought</div>
+        <audio controls>
+            <source src="2025-01-11 at 18.08.34_07ac9089.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
 </body>
 </html>

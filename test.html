@@ -3,209 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Hub</title>
+    <title>Lofi Music Title Generator</title>
     <style>
-        /* General Styles */
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #181818;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #282828;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .search-container input {
-            width: 200px;
-            padding: 8px;
-            border-radius: 20px;
-            border: none;
-            outline: none;
-        }
-
-        .signin-btn {
-            background-color: #ffffff;
-            color: #000000;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            width: 80px;
-            background-color: #202020;
-            padding: 20px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: fixed;
-            height: 100vh;
-            top: 0;
-            left: 0;
-        }
-
-        .sidebar nav ul {
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
-        }
-
-        .sidebar nav ul li {
-            width: 100%;
+            background-color: #f0f0f0;
+            color: #333;
             text-align: center;
-            padding: 10px 0;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
             cursor: pointer;
+            margin-top: 20px;
         }
 
-        .sidebar nav ul li a {
-            text-decoration: none;
-            color: #ffffff;
-            display: block;
+        button:hover {
+            background-color: #0056b3;
         }
 
-        /* Main Content Styles */
-        .main-content {
-            margin-left: 100px;
-            padding-top: 70px;
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        /* Video Grid Styles */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .video-card {
-            background-color: #282828;
-            border-radius: 20px;
-            overflow: hidden;
-            padding: 10px;
-        }
-
-        .video-card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .video-card h3, 
-        .video-card p {
-            margin: 10px 0 5px;
+        .title {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar Section -->
-    <header class="navbar">
-        <div class="search-container">
-            <input type="text" placeholder="Search">
-        </div>
-        <button class="signin-btn">Sign In</button>
-    </header>
 
-    <!-- Sidebar Section -->
-    <aside class="sidebar">
-        <nav>
-            <ul>
-                <li data-category="trending"><a href="#">Trending</a></li>
-                <li data-category="music"><a href="#">Music</a></li>
-                <li data-category="learning"><a href="#">Learning</a></li>
-                <li data-category="films"><a href="#">Films</a></li>
-                <li data-category="news"><a href="#">News</a></li>
-                <li data-category="sports"><a href="#">Sports</a></li>
-            </ul>
-        </nav>
-    </aside>
-
-    <!-- Main Content Section -->
-    <main class="main-content" id="main-content">
-        <section class="video-grid">
-            <!-- Default content loaded here -->
-            <div class="video-card">
-                <img src="https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg" alt="Video Thumbnail">
-                <h3>Welcome to Media Hub</h3>
-                <p>Select a category to view content</p>
-            </div>
-        </section>
-    </main>
+    <h1>Lofi Music Title Generator</h1>
+    <button onclick="generateTitle()">Generate Random Title</button>
+    <div class="title" id="title"></div>
 
     <script>
-        // Data for each category
-        const contentData = {
-            trending: [
-                { title: 'Trending Video 1', description: 'Trending Music', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' },
-                { title: 'Trending Video 2', description: 'Trending News', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' }
-            ],
-            music: [
-                { title: 'Music Video 1', description: 'Chillhop Music', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' },
-                { title: 'Music Video 2', description: 'Lofi Beats', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' }
-            ],
-            learning: [
-                { title: 'Learning Video 1', description: 'Educational Content', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' },
-                { title: 'Learning Video 2', description: 'Science for Kids', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' }
-            ],
-            films: [
-                { title: 'Film Trailer 1', description: 'Upcoming Movies', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' },
-                { title: 'Film Trailer 2', description: 'Blockbusters', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' }
-            ],
-            news: [
-                { title: 'News Report 1', description: 'Breaking News', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' },
-                { title: 'News Report 2', description: 'World News', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' }
-            ],
-            sports: [
-                { title: 'Sports Highlight 1', description: 'Football Highlights', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' },
-                { title: 'Sports Highlight 2', description: 'Basketball Game', image: 'https://i.pinimg.com/736x/7f/63/36/7f63363c5accc0ae46a02d51f283781c.jpg' }
-            ]
-        };
+        const titles = [
+            "Chilled Vibes",
+            "Midnight Jazz",
+            "Rainy Day Beats",
+            "Sunset Chill",
+            "Lost in Thought",
+            "Cloudy Dreams",
+            "Gentle Waves",
+            "Peaceful Hours",
+            "Wandering Mind",
+            "Urban Reflection",
+            "Late Night Escape",
+            "Coffee Shop Moments",
+            "Silent Nights",
+            "Cozy Feelings",
+            "Dreamy Ambience"
+        ];
 
-        // Event Listener for Sidebar Links
-        document.querySelectorAll('.sidebar nav ul li').forEach(item => {
-            item.addEventListener('click', (event) => {
-                const category = event.currentTarget.dataset.category;
-                loadContent(category);
-            });
-        });
-
-        // Function to Load Content Dynamically
-        function loadContent(category) {
-            const mainContent = document.getElementById('main-content');
-            const videoGrid = document.createElement('section');
-            videoGrid.className = 'video-grid';
-
-            contentData[category].forEach(video => {
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card';
-                
-                videoCard.innerHTML = `
-                    <img src="${video.image}" alt="Video Thumbnail">
-                    <h3>${video.title}</h3>
-                    <p>${video.description}</p>
-                `;
-                videoGrid.appendChild(videoCard);
-            });
-
-            // Clear existing content and add new content
-            mainContent.innerHTML = '';
-            mainContent.appendChild(videoGrid);
+        function generateTitle() {
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            const randomTitle = titles[randomIndex];
+            document.getElementById("title").innerText = randomTitle;
         }
     </script>
+
 </body>
 </html>
