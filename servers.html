@@ -3,94 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Discord Style Navigation</title>
+    <title>Discord Style Navigation</title>
     <style>
         body {
             display: flex;
             margin: 0;
             font-family: Arial, sans-serif;
             height: 100vh;
+            background-color: #36393f;
         }
 
         .sidebar {
-            width: 20%;
-            background-color: #2f3136;
+            width: 72px;
+            background-color: #202225;
             color: white;
-            padding: 10px;
+            padding: 10px 0;
             box-sizing: border-box;
             height: 100vh;
-            transition: background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: width 0.2s ease;
             position: relative;
-            overflow: hidden;
+        }
+
+        .sidebar:hover {
+            width: 240px;
         }
 
         .sidebar a {
-            display: block;
+            width: 100%;
             color: white;
-            padding: 12px 15px;
+            padding: 15px 0;
             text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .sidebar a:hover {
-            background-color: #40444b;
-            transform: translateX(5px);
+            background-color: #5865f2;
         }
 
-        .sidebar a:not(:last-child) {
-            border-bottom: 1px solid #40444b;
-            margin-bottom: 5px;
+        .sidebar a span {
+            margin-left: 10px;
+            display: none;
+            font-size: 14px;
         }
 
-        /* Sidebar Resizer */
-        .sidebar-resizer {
-            width: 10px;
-            background-color: #40444b;
-            cursor: ew-resize;
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            z-index: 100;
+        .sidebar:hover a span {
+            display: inline-block;
+        }
+
+        .sidebar a .emoji {
+            font-size: 24px;
         }
 
         .content {
-            width: 80%;
+            flex-grow: 1;
             background-color: #36393f;
             color: white;
             padding: 20px;
             box-sizing: border-box;
             height: 100vh;
             overflow-y: auto;
-            animation: fadeIn 0.5s ease-in;
-            transition: width 0.3s ease;
-        }
-
-        .content h1 {
-            margin-top: 0;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
         }
 
         .iframe-container {
@@ -107,44 +90,81 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border: 2px solid black;
+            border: none;
         }
 
-        /* Media Queries for Responsiveness */
-        @media screen and (max-width: 768px) {
-            .sidebar {
-                width: 50%;
-            }
-
-            .content {
-                width: 50%;
-            }
+        .typing {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid;
+            animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
         }
 
-        @media screen and (max-width: 480px) {
-            .sidebar {
-                width: 100%;
+        @keyframes typing {
+            from {
+                width: 0;
             }
-
-            .content {
+            to {
                 width: 100%;
             }
         }
 
+        @keyframes blink {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: white;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <a onclick="showContent('Overthinker')">Overthinker</a>
-        <a onclick="showContent('Extroverts')">Extroverts</a>
-        <a onclick="showContent('Ambiverts')">Ambiverts</a>
-        <a onclick="showContent('Introverts')">Introverts</a>
-        <a onclick="showContent('Empaths')">Empaths</a>
-        <div class="sidebar-resizer" id="resizer"></div>
+        <a onclick="showContent('Overthinker')">
+            <span class="emoji">🤔</span>
+            <span>Overthinker</span>
+        </a>
+        <a onclick="showContent('Extroverts')">
+            <span class="emoji">😃</span>
+            <span>Extroverts</span>
+        </a>
+        <a onclick="showContent('Ambiverts')">
+            <span class="emoji">🤷‍♂️</span>
+            <span>Ambiverts</span>
+        </a>
+        <a onclick="showContent('Introverts')">
+            <span class="emoji">🤫</span>
+            <span>Introverts</span>
+        </a>
+        <a onclick="showContent('Empaths')">
+            <span class="emoji">🌟</span>
+            <span>Empaths</span>
+        </a>
+        <a onclick="showContent('Optimists')">
+            <span class="emoji">😊</span>
+            <span>Optimists</span>
+        </a>
+        <a onclick="showContent('Realists')">
+            <span class="emoji">😐</span>
+            <span>Realists</span>
+        </a>
+        <a onclick="showContent('Idealists')">
+            <span class="emoji">🌈</span>
+            <span>Idealists</span>
+        </a>
+        <a onclick="showContent('Analysts')">
+            <span class="emoji">🧐</span>
+            <span>Analysts</span>
+        </a>
+        <a onclick="showContent('Adventurers')">
+            <span class="emoji">🏞️</span>
+            <span>Adventurers</span>
+        </a>
     </div>
     <div class="content" id="content">
-        <h1>Welcome</h1>
-        <p>Select a section from the sidebar to view content.</p>
+        <div class="typing">Discover Your Personality Tribe. Explore Now!</div>
     </div>
 
     <script>
@@ -154,35 +174,16 @@
                 Extroverts: '<div class="iframe-container"><iframe src="https://tlk.io/Extroverts"></iframe></div>',
                 Ambiverts: '<div class="iframe-container"><iframe src="https://tlk.io/ambiverts"></iframe></div>',
                 Introverts: '<div class="iframe-container"><iframe src="https://tlk.io/Introverts"></iframe></div>',
-                Empaths: '<div class="iframe-container"><iframe src="https://tlk.io/Empaths"></iframe></div>'
+                Empaths: '<div class="iframe-container"><iframe src="https://tlk.io/Empaths"></iframe></div>',
+                Optimists: '<div class="iframe-container"><iframe src="https://tlk.io/Optimists"></iframe></div>',
+                Realists: '<div class="iframe-container"><iframe src="https://tlk.io/Realists"></iframe></div>',
+                Idealists: '<div class="iframe-container"><iframe src="https://tlk.io/Idealists"></iframe></div>',
+                Analysts: '<div class="iframe-container"><iframe src="https://tlk.io/Analysts"></iframe></div>',
+                Adventurers: '<div class="iframe-container"><iframe src="https://tlk.io/Adventurers"></iframe></div>',
             };
 
-            document.getElementById('content').innerHTML = content[page] || '<h1>Welcome</h1><p>Select a section from the sidebar to view content.</p>';
-        }
-
-        // Resizing functionality for the sidebar
-        const resizer = document.getElementById('resizer');
-        const sidebar = document.querySelector('.sidebar');
-        let isResizing = false;
-
-        resizer.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', () => {
-                isResizing = false;
-                document.removeEventListener('mousemove', handleMouseMove);
-            });
-        });
-
-        function handleMouseMove(e) {
-            if (isResizing) {
-                const newWidth = e.clientX;
-                sidebar.style.width = `${newWidth}px`;
-                document.querySelector('.content').style.width = `calc(100% - ${newWidth}px)`;
-            }
+            document.getElementById('content').innerHTML = content[page] || '<div class="typing">Discover Your Personality Tribe. Explore Now!</div>';
         }
     </script>
 </body>
 </html>
-
-
